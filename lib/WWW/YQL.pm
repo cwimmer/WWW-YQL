@@ -98,13 +98,13 @@ sub query{
 
 None known at this time.  Please log issues at: 
 
-https://github.com/cwimmer/www-yql/issues
+https://github.com/cwimmer/WWW-YQL/issues
 
 =head1 AVAILABILITY
 
 Source code is available on GitHub:
 
-https://github.com/cwimmer/www-yql
+https://github.com/cwimmer/WWW-YQL
 
 Module available on CPAN as WWW::YQL:
 
