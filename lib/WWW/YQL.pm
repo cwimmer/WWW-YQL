@@ -9,6 +9,7 @@ use JSON::Any;
 
 
 # ABSTRACT: Module for YQL queries
+# PODNAME: WWW::YQL
 
 has 'ua' => (
     is  => 'rw',
@@ -24,13 +25,26 @@ has 'json_parser' => (
 
 =head1 SYNOPSIS
     
+    use WWW::YQL;
+    
+    my $yql = WWW::YQL->new();
+    my $data = $yql->query("show tables");
+
+    foreach my $table ( @{ $data->{'query'}{'results'}{'table'} }){
+        print "$table\n";
+    }
+
+    $data = $yql->query("insert into yahoo.y.ahoo.it (url) values ('http://search.cpan.org/~cwimmer/')");
+    
+    my $shorty=$data->{'query'}->{'results'}->{'url'};
+
     The User Agent that will be used to make the connection is available
     from the ua() method.  You may make changes to the User Agent
     before running the query() method.
 
 =head2 DESCRIPTION
 
-None yet
+    This module is used to submit YQL queries and receive their responses.
 
 =cut
 
@@ -42,8 +56,11 @@ sub BUILD{
 
 =method query
 
-This method takes one argument, a string.  The string is the YQL query
-string for this request.
+    This method takes one argument, a string.  The string is the YQL
+    query string for this request.
+
+    The return value is a has reference representing the result from
+    the YQL service.
 
 =cut
 
@@ -56,7 +73,6 @@ sub query{
     my $res;
     my $req;
     if ($query =~ m/^insert/){
-#	$req = HTTP::Request->new(POST => $URI);
 	$res = $self->{'ua'}->post($URI, {
 	    'q'      => $query,
 	    'format' => 'json',
@@ -77,15 +93,6 @@ sub query{
 
 }
 
-=method test
-
-No docs yet
-
-=cut
-
-sub test{
-    return;
-}
 1;
 =head1 KNOWN BUGS
 
